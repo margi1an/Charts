@@ -1,17 +1,19 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { FaTwitter } from "react-icons/fa";
 import { IoMdPin } from "react-icons/io";
 import { IoMdLink } from "react-icons/io";
 import { PiBuildingOfficeFill } from "react-icons/pi";
+import toast from "react-hot-toast";
 
 import "./Card.css";
 import Navbar from "./Navbar";
 import Inputs from "./Inputs";
 import Card from "./Card";
-import toast from "react-hot-toast";
 
 function Form({ getData }) {
-  const [datas, setDatas] = useState(null); 
+  const [datas, setDatas] = useState(null);
+  const [showModal, setShowModal] = useState(false); // State to control modal visibility
+  const [followersModal, setFollowersModal] = useState(false); // State to control followers modal visibility
   const textInput = useRef();
 
   async function handleSubmit(e) {
@@ -25,16 +27,37 @@ function Form({ getData }) {
         throw new Error("User not found");
       }
       const userData = await response.json();
-      setDatas(userData); 
+      setDatas(userData);
       textInput.current.value = "";
       toast.success("User data fetched successfully! ✋😃");
     } catch (error) {
       console.error("Error fetching user data:", error);
-      toast.error("User not found. Please enter a valid GitHub username ! ✋🤦‍♂️");
-      textInput.current.value = ''
+      toast.error(
+        "User not found. Please enter a valid GitHub username ! ✋🤦‍♂️"
+      );
+      textInput.current.value = "";
     }
   }
 
+  // Function to handle opening the repos modal
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  // Function to handle closing the repos modal
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  // Function to handle opening the followers modal
+  const openFollowersModal = () => {
+    setFollowersModal(true);
+  };
+
+  // Function to handle closing the followers modal
+  const closeFollowersModal = () => {
+    setFollowersModal(false);
+  };
 
   return (
     <div>
@@ -77,10 +100,14 @@ function Form({ getData }) {
               </div>
               <div className="joined">
                 <div className="h1">
-                  <h1 className="text-2xl font-bold ml-9">{datas.name || datas.login}</h1>
+                  <h1 className="text-2xl font-bold ml-9">
+                    {datas.name || datas.login}
+                  </h1>
                 </div>
                 <div className="h4">
-                  <h4>Joined {new Date(datas.created_at).toLocaleDateString()}</h4>
+                  <h4>
+                    Joined {new Date(datas.created_at).toLocaleDateString()}
+                  </h4>
                 </div>
               </div>
             </div>
@@ -94,11 +121,30 @@ function Form({ getData }) {
               <div className="body rounded-lg">
                 <div className="repos text-center">
                   <h1 className="mb-2">Repos</h1>
-                  <h2 className="text-2xl font-bold">{datas.public_repos}</h2>
+                  <button onClick={openModal} className="text-2xl font-bold">
+                    {datas.public_repos}
+                  </button>
+                  {showModal && (
+                    <Modal
+                      repos={datas.repos_url}
+                      closeModal={closeModal}
+                    />
+                  )}
                 </div>
                 <div className="repos text-center">
                   <h1 className="mb-2">Followers</h1>
-                  <h2 className="text-2xl font-bold">{datas.followers}</h2>
+                  <button
+                    onClick={openFollowersModal}
+                    className="text-2xl font-bold"
+                  >
+                    {datas.followers}
+                  </button>
+                  {followersModal && (
+                    <FollowersModal
+                      followersUrl={datas.followers_url}
+                      closeModal={closeFollowersModal}
+                    />
+                  )}
                 </div>
                 <div className="repos text-center">
                   <h1 className="mb-2">Following</h1>
@@ -152,3 +198,82 @@ function Form({ getData }) {
 }
 
 export default Form;
+
+// Modal component to display repositories
+function Modal({ repos, closeModal }) {
+  const [repositories, setRepositories] = useState([]);
+
+  useEffect(() => {
+    async function fetchRepositories() {
+      try {
+        const response = await fetch(repos);
+        if (!response.ok) {
+          throw new Error("Failed to fetch repositories");
+        }
+        const repoData = await response.json();
+        setRepositories(repoData);
+      } catch (error) {
+        console.error("Error fetching repositories:", error);
+      }
+    }
+
+    fetchRepositories();
+  }, [repos]);
+
+  return (
+    <dialog open className="modal">
+      <div className="modal-box">
+        <button onClick={closeModal} className="modal-close btn btn-error mb-4">
+          Close
+        </button>
+        <h3 className="font-bold text-lg">Repositories</h3>
+        <ul className="repo-list flex gap-9 flex-wrap ">
+          {repositories.map((repo) => (
+            <li key={repo.id} className="mb-4 btn btn-primary ">
+              <a href={repo.html_url}>{repo.name}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </dialog>
+  );
+}
+
+function FollowersModal({ followersUrl, closeModal }) {
+  const [followers, setFollowers] = useState([]);
+
+  useEffect(() => {
+    async function fetchFollowers() {
+      try {
+        const response = await fetch(followersUrl);
+        if (!response.ok) {
+          throw new Error("Failed to fetch followers");
+        }
+        const followersData = await response.json();
+        setFollowers(followersData);
+      } catch (error) {
+        console.error("Error fetching followers:", error);
+      }
+    }
+
+    fetchFollowers();
+  }, [followersUrl]);
+
+  return (
+    <dialog open className="modal">
+      <div className="modal-box">
+        <button onClick={closeModal} className="modal-close btn btn-error mb-4">
+          Close
+        </button>
+        <h3 className="font-bold text-lg">Followers</h3>
+        <ul className="follower-list flex gap-9 flex-wrap">
+          {followers.map((follower) => (
+            <li key={follower.id} className="mb-4 btn btn-primary">
+              <a href={follower.html_url}>{follower.login}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </dialog>
+  );
+}

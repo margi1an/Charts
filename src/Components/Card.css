@@ -1,0 +1,122 @@
+.cardss {
+    width: 730px;
+    height: 450px;
+    top: 311px;
+    left: 355px;
+    gap: 0px;
+    opacity: 0px;
+
+}
+
+.ava {
+    padding-left: 48px;
+    padding-top: 48px;
+    width: 117px;
+    height: 117px;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    gap: 37px;
+}
+
+.h1 h1 {
+    letter-spacing: 2px;
+}
+
+.joined {
+    display: flex;
+    align-items: center;
+    gap: 200px;
+}
+
+.h4 h4 {
+    opacity: 0.65px;
+}
+
+.m {
+    margin-left: 195px;
+    margin-top: -30px;
+}
+
+.m a {
+    color: blue;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.m a:hover {
+    text-decoration: underline;
+}
+
+.profile {
+    margin-left: 195px;
+    margin-top: 20px;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 2px;
+}
+
+.Cardsss {
+    margin-left: 202px;
+    width: 480px;
+    height: 100px;
+    top: 497px;
+    left: 557px;
+    gap: 0px;
+    opacity: 0px;
+    margin-top: 32px;
+}
+.body {
+    width: 480px;
+    height: 85px;
+    gap: 0px;
+    opacity: 0px;
+    display: flex;
+    gap: 69px;
+    margin-top: 50px;
+}
+.dv{
+    margin-top: 39px;
+}
+.first{
+    display: flex;
+    align-items: center;
+    gap: 90px;
+    margin-bottom: 19px;
+    margin-left: -100px;
+}
+.one{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.text h1{
+    letter-spacing: 1px;
+    font-family: Space Mono;
+    font-size: 18px;
+}
+.two{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.95px;
+}
+.three{
+    display: flex;
+    align-items: center;
+    gap: 120px;
+}
+.threee{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -100px;
+
+}
+.four{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

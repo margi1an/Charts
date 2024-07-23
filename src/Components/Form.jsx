@@ -7,13 +7,12 @@ import toast from "react-hot-toast";
 
 import "./Card.css";
 import Navbar from "./Navbar";
-import Inputs from "./Inputs";
-import Card from "./Card";
+
 
 function Form({ getData }) {
   const [datas, setDatas] = useState(null);
-  const [showModal, setShowModal] = useState(false); // State to control modal visibility
-  const [followersModal, setFollowersModal] = useState(false); // State to control followers modal visibility
+  const [showModal, setShowModal] = useState(false); 
+  const [followersModal, setFollowersModal] = useState(false);
   const textInput = useRef();
 
   async function handleSubmit(e) {
@@ -39,22 +38,18 @@ function Form({ getData }) {
     }
   }
 
-  // Function to handle opening the repos modal
   const openModal = () => {
     setShowModal(true);
   };
 
-  // Function to handle closing the repos modal
   const closeModal = () => {
     setShowModal(false);
   };
 
-  // Function to handle opening the followers modal
   const openFollowersModal = () => {
     setFollowersModal(true);
   };
 
-  // Function to handle closing the followers modal
   const closeFollowersModal = () => {
     setFollowersModal(false);
   };
@@ -198,8 +193,7 @@ function Form({ getData }) {
 }
 
 export default Form;
-
-// Modal component to display repositories
+//modal ochilish qismi
 function Modal({ repos, closeModal }) {
   const [repositories, setRepositories] = useState([]);
 

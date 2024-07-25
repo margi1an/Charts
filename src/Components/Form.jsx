@@ -4,14 +4,13 @@ import { IoMdPin } from "react-icons/io";
 import { IoMdLink } from "react-icons/io";
 import { PiBuildingOfficeFill } from "react-icons/pi";
 import toast from "react-hot-toast";
-
+import Piechart from "./Piechart"; 
 import "./Card.css";
 import Navbar from "./Navbar";
 
-
 function Form({ getData }) {
   const [datas, setDatas] = useState(null);
-  const [showModal, setShowModal] = useState(false); 
+  const [showModal, setShowModal] = useState(false);
   const [followersModal, setFollowersModal] = useState(false);
   const textInput = useRef();
 
@@ -120,10 +119,7 @@ function Form({ getData }) {
                     {datas.public_repos}
                   </button>
                   {showModal && (
-                    <Modal
-                      repos={datas.repos_url}
-                      closeModal={closeModal}
-                    />
+                    <Modal repos={datas.repos_url} closeModal={closeModal} />
                   )}
                 </div>
                 <div className="repos text-center">
@@ -188,12 +184,14 @@ function Form({ getData }) {
           </div>
         </div>
       )}
+
+      {datas && <Piechart datas={datas} />}
     </div>
   );
 }
 
 export default Form;
-//modal ochilish qismi
+
 function Modal({ repos, closeModal }) {
   const [repositories, setRepositories] = useState([]);
 

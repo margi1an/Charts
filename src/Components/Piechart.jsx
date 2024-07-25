@@ -3,39 +3,37 @@ import ReactApexChart from "react-apexcharts";
 
 function ApexChart(){
   const [chartData , setChatData] = useState(
-    {
-      
-      series: [44, 55, 13, 43, 22],
-      options: {
-        chart: {
-          width: 380,
-          type: 'pie',
-        },
-        labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
-        responsive: [{
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200
-            },
-            legend: {
-              position: 'bottom',
-            }
-          }
-        }]
+   { series: [{
+      data: [10,8,3,1]
+    }],
+    options: {
+      chart: {
+        type: 'bar',
+        height: 350
       },
-    
-    
-    }
+      plotOptions: {
+        bar: {
+          borderRadius: 4,
+          borderRadiusApplication: 'end',
+          horizontal: true,
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      xaxis: {
+        categories: ['Html', 'Css', 'Javascript','null'         ],
+      }
+    }}
   )
-  return(
-    <div>
-    <div id="chart">
-      <ReactApexChart options={chartData.options} series={chartData.series} type="pie" width={380} />
+  return (
+    <div className='mt-9'>
+      <div id="chart">
+        <ReactApexChart options={chartData.options} series={chartData.series} type="bar" height={350} />
+      </div>
+      <div id="html-dist"></div>
     </div>
-    <div id="html-dist"></div>
-  </div>
-  )
+  );
 }
 
 
